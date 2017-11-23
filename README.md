@@ -11,6 +11,21 @@ dynamodump supports local DynamoDB instances as well (tested with [dynalite](htt
 
 Usage
 -----
+For DUMP all dynamo db for one region
+```
+python dynamodump.py -m  backup --region your-region --host localhost --srcTable '*' --port 8000 --accessKey fooKey --secretKey barKey
+```
+
+For restore the dump db for one region
+```
+python dynamodump.py -m  restore --region your-region --host localhost --srcTable '*' --port 8000 --accessKey fooKey --secretKey barKey
+```
+
+For DUMP all dynamo data schema for one region
+```
+python dynamodump.py -m  backup --schemaOnly --region your-region --host localhost --srcTable '*' --port 8000 --accessKey fooKey --secretKey barKey
+```
+
 ```
 usage: dynamodump.py [-h] [-a {zip,tar}] [-b BUCKET] [-m MODE] [-r REGION]
                      [--host HOST] [--port PORT] [--accessKey ACCESSKEY]
