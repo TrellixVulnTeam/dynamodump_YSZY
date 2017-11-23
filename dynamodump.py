@@ -15,7 +15,7 @@ import logging
 import os
 import shutil
 import threading
-import Queue
+import queue
 import datetime
 import errno
 import sys
@@ -23,7 +23,7 @@ import time
 import re
 import zipfile
 import tarfile
-import urllib2
+from urllib.request import urlopen
 
 import boto.dynamodb2.layer1
 from boto.dynamodb2.exceptions import ProvisionedThroughputExceededException
@@ -63,7 +63,7 @@ def _get_aws_client(profile, region, service):
     # Fallback to querying metadata for region
     if not aws_region:
         try:
-            azone = urllib2.urlopen(METADATA_URL + "placement/availability-zone",
+            azone = urlopen(METADATA_URL + "placement/availability-zone",
                                     data=None, timeout=5).read().decode()
             aws_region = azone[:-1]
         except urllib2.URLError:
@@ -913,7 +913,7 @@ def main():
         except AttributeError:
             # Didn't specify srcTable if we get here
 
-            q = Queue.Queue()
+            q = queue.Queue()
             threads = []
 
             for i in range(MAX_NUMBER_BACKUP_WORKERS):
